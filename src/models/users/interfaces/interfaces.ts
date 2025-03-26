@@ -1,4 +1,4 @@
-export enum EnumUserTypes {
-  ESTUDANTE = 'estudande',
-  PROFESSOR = 'professor',
+export enum EnumType {
+  paciente = 'PROFESSOR',
+  doctor = 'ESTUDANTE',
 }

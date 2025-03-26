@@ -9,14 +9,17 @@ import {
   UseGuards,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Req,
 } from '@nestjs/common';
-import { UsersService } from './user.service';
+import { UsersService } from './users.service';
 import { CreateUsersDto } from './dtos/create-users.dto';
 import { UpdateUsersDto } from './dtos/update-users.dto';
 import { AuthGuard } from '../../shared/auth/auth.guard';
+import { Request } from 'express';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Controller('users')
-export class UserController {
+export class UsersController {
   constructor(private readonly usersServices: UsersService) {}
 
   @UseGuards(AuthGuard)
@@ -27,10 +30,10 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('user/:id')
+  @Get('user')
   @UseInterceptors(ClassSerializerInterceptor)
-  async findByPk(@Param('id') id: string) {
-    return await this.usersServices.findByPk(id);
+  async findByPk(@Req() request: Request) {
+    return await this.usersServices.findByPk(request);
   }
 
   @Post('create/user')
@@ -39,17 +42,26 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Put('update/user/:id')
+  @Put('update/user')
   async updateOne(
-    @Param('id') id: string,
+    @Req() request: Request,
     @Body() updateUsersDto: UpdateUsersDto,
   ) {
-    return await this.usersServices.updateOne(id, updateUsersDto);
+    return await this.usersServices.updateOne(request, updateUsersDto);
   }
 
   @UseGuards(AuthGuard)
   @Delete('delete/user/:id')
   async deleteOne(@Param('id') id: string) {
     return await this.usersServices.deleteOne(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('password/user/update')
+  async updatePassword(
+    @Req() request: Request,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    return await this.usersServices.updatePassword(request, updatePasswordDto);
   }
 }

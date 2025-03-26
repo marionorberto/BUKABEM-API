@@ -13,7 +13,7 @@ import {
 import * as bcryptjs from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import { Notification } from '../notification/notification.entity';
-import { EnumUserTypes } from 'src/models/users/interfaces/interfaces';
+import { EnumType } from 'src/models/users/interfaces/interfaces';
 import { Feedback } from '../feedback/feedback.entity';
 import { TestResult } from '../test-result/test-result';
 import { MentorSocialNetwork } from '../mentor-social-network.ts/mentor-social-network';
@@ -34,8 +34,8 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({ name: 'type', type: 'enum', enum: EnumUserTypes })
-  type: EnumUserTypes;
+  @Column({ name: 'type', type: 'enum', enum: EnumType })
+  type: EnumType;
 
   @OneToMany(() => TestResult, (testResult) => testResult.user, {
     cascade: true,

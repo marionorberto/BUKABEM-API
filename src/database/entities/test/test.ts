@@ -6,8 +6,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { EnumTestMateria } from 'src/models/test/interfaces/interfaces';
 import { Question } from '../question/question';
+
+enum EnumTestMateria {
+  MATH = 'matemática',
+  PHISIC = 'física',
+  LP = 'lingua portuguesa',
+  ENGLISH = 'ingles',
+}
 
 @Entity('test')
 export class Test {

@@ -6,10 +6,18 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
-import {
-  EnumMentorshipStatus,
-  EnumMentorshipType,
-} from 'src/models/mentorship-appointment/interfaces/interfaces';
+
+enum EnumMentorshipStatus {
+  PENDIND = 'pendente',
+  ACCEPTED = 'aceita',
+  CONCLUDED = 'concluida',
+  REJECTED = 'rejeitada',
+}
+
+enum EnumMentorshipType {
+  PROJECTO = 'projecto',
+  ESTUDANTIL = 'estudantil',
+}
 
 @Entity('mentorship_appointment')
 export class MentorshipAppointment {

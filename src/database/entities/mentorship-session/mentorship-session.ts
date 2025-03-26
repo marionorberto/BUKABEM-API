@@ -7,8 +7,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { EnumMentorshipStatus } from 'src/models/mentorship-appointment/interfaces/interfaces';
 import { MentorshipAppointment } from '../mentorship-appointment/mentorship-appointment';
+
+enum EnumMentorshipStatus {
+  PENDIND = 'pendente',
+  ACCEPTED = 'aceita',
+  CONCLUDED = 'concluida',
+  REJECTED = 'rejeitada',
+}
 
 @Entity('mentorship_session')
 export class MentorshipSession {

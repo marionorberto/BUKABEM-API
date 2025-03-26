@@ -2,15 +2,10 @@ import { Module } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProfileModule } from './models/profile/profile.module';
-import { AuthModule } from './core/auth/auth.module';
-import { PostsModule } from './models/posts/posts.module';
+import { AuthModule } from './shared/auth/auth.module';
 import { TypeOrmModule } from './config/datasource';
-import { UsersModule } from './models/users/user.module';
-import { NotificationsModule } from './models/notifications/notifications.module';
-import { FileUploadModule } from './models/file-upload/file-upload.module';
+import { UsersModule } from './models/users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { EmailModule } from './models/email/email.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 @Module({
@@ -35,12 +30,7 @@ import { APP_GUARD } from '@nestjs/core';
     TypeOrmModule,
     UsersModule,
     AuthModule,
-    PostsModule,
-    ProfileModule,
-    NotificationsModule,
-    FileUploadModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    EmailModule,
   ],
   controllers: [AppController],
   providers: [

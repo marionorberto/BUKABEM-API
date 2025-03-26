@@ -8,8 +8,19 @@ import {
   OneToOne,
 } from 'typeorm';
 import { User } from '../user/user.entity';
-import { EnumClass } from 'src/models/profile/interfaces/interface';
-import { EnumCourse } from 'src/models/course/interfaces/interfaces';
+
+enum EnumCourse {
+  INFORMATIC = 'informática',
+  TELECOMUNICATION = 'electrónica e telecomunicações',
+  MULTIMEDIA = 'informática e multimedia',
+}
+
+enum EnumClasse {
+  DECIMA = '10',
+  DECIMA_PRIMEIRA = '11',
+  DECIMA_SEGUNDA = '12',
+  DECIMA_TERCEIRA = '13',
+}
 
 @Entity('profile')
 export class Profile {
@@ -25,8 +36,8 @@ export class Profile {
   @Column({ name: 'imgUrl', type: 'varchar', nullable: true })
   imgUrl: string;
 
-  @Column({ name: 'class', type: 'enum', enum: EnumClass })
-  class: EnumClass;
+  @Column({ name: 'class', type: 'enum', enum: EnumClasse })
+  class: EnumClasse;
 
   @Column({ name: 'personalDescription', type: 'text', nullable: true })
   personalDescription: string;
