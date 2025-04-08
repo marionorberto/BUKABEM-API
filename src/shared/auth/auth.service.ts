@@ -18,6 +18,17 @@ export class AuthService {
           email: signInDto.email,
         },
       });
+      if (!userData.id)
+        throw new HttpException(
+          {
+            statusCode: 401,
+            method: 'POST',
+            message: 'email ou password inválida!',
+            path: '/users',
+            timestamp: Date.now(),
+          },
+          HttpStatus.UNAUTHORIZED,
+        );
 
       const isPasswordValid = await this.validatePassword(
         signInDto.password,
@@ -29,7 +40,7 @@ export class AuthService {
           {
             statusCode: 401,
             method: 'POST',
-            message: 'USER PASSWORD Not Invalid.',
+            message: 'email ou password inválida!',
             path: '/users',
             timestamp: Date.now(),
           },
@@ -51,7 +62,7 @@ export class AuthService {
         {
           statusCode: 401,
           method: 'POST',
-          message: 'Failed to authenticate User',
+          message: 'email ou password inválida!',
           error: error.message,
           path: '/users',
           timestamp: Date.now(),

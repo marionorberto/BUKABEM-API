@@ -7,14 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MentorshipAppointment } from '../mentorship-appointment/mentorship-appointment';
-
-enum EnumMentorshipStatus {
-  PENDIND = 'pendente',
-  ACCEPTED = 'aceita',
-  CONCLUDED = 'concluida',
-  REJECTED = 'rejeitada',
-}
+import { MentorshipAppointment } from '../mentorship-appointment/mentorship-appointment.entity';
+import { EnumMentorshipStatus } from 'src/models/mentorship-appointment/interfaces/interface';
 
 @Entity('mentorship_session')
 export class MentorshipSession {
@@ -27,7 +21,7 @@ export class MentorshipSession {
   @Column({ name: 'status', type: 'enum', enum: EnumMentorshipStatus })
   status: EnumMentorshipStatus;
 
-  @CreateDateColumn({ name: 'dateBooked', type: 'timestamp' })
+  @CreateDateColumn({ name: 'date_booked', type: 'timestamp' })
   dateBooked: Date;
 
   @OneToOne(() => MentorshipAppointment, { cascade: true })

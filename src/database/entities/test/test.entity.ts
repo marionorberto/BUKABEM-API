@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Question } from '../question/question';
+import { Question } from '../question/question.entity';
 
 enum EnumTestMateria {
   MATH = 'matemática',

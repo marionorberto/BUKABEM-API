@@ -14,14 +14,16 @@ import { Global, Module } from '@nestjs/common';
         try {
           const dataSource = new DataSource({
             type: 'mysql',
-            host: 'localhost',
+            host: '127.0.0.1',
             port: 3306,
             username: process.env.DATABASE_USERNAME,
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE_NAME,
             synchronize: true,
-            logging: false,
-            entities: [`${__dirname}/../entities/**/**.entity{.ts,.js}`], // this will automatically load all entity file in the src folder
+            logging: true,
+            entities: [
+              `${__dirname}/../database/entities/**/**.entity{.ts,.js}`,
+            ], // this will automatically load all entity file in the src folder
           });
           await dataSource.initialize(); // initialize the data source
           console.log('Database connected successfully');

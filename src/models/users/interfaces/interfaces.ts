@@ -1,4 +1,5 @@
 export enum EnumType {
-  paciente = 'PROFESSOR',
-  doctor = 'ESTUDANTE',
+  PROFESSOR = 'professor',
+  ESTUDANTE = 'estudante',
+  AdMIN = 'admin',
 }

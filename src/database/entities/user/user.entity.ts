@@ -15,9 +15,10 @@ import { Exclude } from 'class-transformer';
 import { Notification } from '../notification/notification.entity';
 import { EnumType } from 'src/models/users/interfaces/interfaces';
 import { Feedback } from '../feedback/feedback.entity';
-import { TestResult } from '../test-result/test-result';
-import { MentorSocialNetwork } from '../mentor-social-network.ts/mentor-social-network';
-import { Turm } from '../turm/turm';
+import { TestResult } from '../test-result/test-result.entity';
+import { MentorSocialNetwork } from '../mentor-social-network.ts/mentor-social-network.entity';
+import { Turm } from '../turm/turm.entity';
+import { MentorshipAppointment } from '../mentorship-appointment/mentorship-appointment.entity';
 
 @Entity('user')
 export class User {
@@ -34,36 +35,55 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({ name: 'type', type: 'enum', enum: EnumType })
+  @Column({
+    name: 'type',
+    type: 'enum',
+    enum: EnumType,
+    default: EnumType.ESTUDANTE,
+  })
   type: EnumType;
 
   @OneToMany(() => TestResult, (testResult) => testResult.user, {
-    cascade: true,
     eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   testResult: TestResult[];
 
   @OneToMany(() => Notification, (notification) => notification.user, {
-    cascade: true,
     eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   notification: Notification[];
 
   @OneToMany(() => Feedback, (feedback) => feedback.autor, {
-    cascade: true,
     eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   feedback: Feedback[];
 
   @OneToMany(() => MentorSocialNetwork, (socialNetwork) => socialNetwork.user, {
-    cascade: true,
     eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   mentorSocialNetworkUrl: MentorSocialNetwork[];
 
-  @ManyToMany(() => Turm, { cascade: true, eager: true })
+  @ManyToMany(() => Turm, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinTable()
   turm: Turm[];
+
+  @OneToMany(
+    () => MentorshipAppointment,
+    (mentorshipAppointment) => mentorshipAppointment.mentoring,
+  )
+  mentorshipAppointment: MentorshipAppointment;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

@@ -7,7 +7,7 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api/v1/bukakem');
+  app.setGlobalPrefix('api/v1/bukabem');
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({

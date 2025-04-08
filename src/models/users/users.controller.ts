@@ -22,7 +22,7 @@ import { UpdatePasswordDto } from './dtos/update-password.dto';
 export class UsersController {
   constructor(private readonly usersServices: UsersService) {}
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get('all')
   @UseInterceptors(ClassSerializerInterceptor)
   async findAll() {

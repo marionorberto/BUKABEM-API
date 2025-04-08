@@ -2,10 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Test } from '../test/test.entity';
 
 enum EnumMentorshipStatus {
   PENDIND = 'pendente',
@@ -14,19 +15,19 @@ enum EnumMentorshipStatus {
   REJECTED = 'rejeitada',
 }
 
-enum EnumMentorshipType {
-  PROJECTO = 'projecto',
-  ESTUDANTIL = 'estudantil',
-}
-
-@Entity('mentorship_appointment')
-export class MentorshipAppointment {
-  @PrimaryGeneratedColumn('uuid', { name: 'mentorship_appointment_id' })
+@Entity('question')
+export class Question {
+  @PrimaryGeneratedColumn('uuid', { name: 'question_id' })
   id: string;
 
-  mentoring: User[];
+  @Column({ name: 'enunciation', type: 'json' })
+  enunciation: string;
 
-  mentor: User[];
+  @Column({ name: 'reply_option', type: 'varchar' })
+  replyOption: string;
+
+  @Column({ name: 'correct_order', type: 'int' })
+  correctOrder: number;
 
   @Column({
     name: 'status',
@@ -36,11 +37,11 @@ export class MentorshipAppointment {
   })
   status: EnumMentorshipStatus;
 
-  @CreateDateColumn({ name: 'inviteDate', type: 'date' })
+  @CreateDateColumn({ name: 'invite_date', type: 'timestamp' })
   inviteDate: Date;
 
-  @Column({ name: 'type', type: 'enum', enum: EnumMentorshipType })
-  type: EnumMentorshipType;
+  @ManyToOne(() => Test, (test) => test.question)
+  test: Test[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
