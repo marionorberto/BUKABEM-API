@@ -8,6 +8,7 @@ import { User } from 'src/database/entities/user/user.entity';
 import { Request } from 'express';
 import { UsersService } from '../users/users.service';
 import { MentorshipAppointment } from 'src/database/entities/mentorship-appointment/mentorship-appointment.entity';
+import { TagMentorship } from 'src/database/entities/tag-mentorship/tag-mentorship.entity';
 
 @Injectable()
 export class MentorshipAppointmentService {
@@ -16,6 +17,8 @@ export class MentorshipAppointmentService {
     private readonly mentorshipAppointmentRepo: Repository<MentorshipAppointment>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(TagMentorship)
+    private readonly tagRepo: Repository<TagMentorship>,
     private readonly userService: UsersService,
   ) {}
 
@@ -76,14 +79,22 @@ export class MentorshipAppointmentService {
         },
       );
 
-      const { id, type, status, mentoring, inviteDate, createdAt } =
+      const savedMentorshipAppointment =
         await this.mentorshipAppointmentRepo.save(mentorshipAppointmentToSave);
+
+      createMentorshipAppointment.tags.forEach(async (element) => {
+        const newTag = this.tagRepo.create({
+          description: element.description,
+          mentorship: savedMentorshipAppointment,
+        });
+        await this.tagRepo.save(newTag);
+      });
 
       return {
         statusCode: 201,
         method: 'POST',
         message: 'appointment requested created sucessfully',
-        data: { id, type, status, mentoring, inviteDate, createdAt },
+        data: { a: savedMentorshipAppointment },
         path: '/mentorship-appointments/create/mentorship-appointment',
         timestamp: Date.now(),
       };

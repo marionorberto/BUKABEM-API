@@ -6,16 +6,18 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import {
   EnumClasse,
   EnumCourse,
 } from 'src/models/profiles/interfaces/interfaces';
+import { MentorMajor } from '../mentor-major/mentor-major.entity';
 
-@Entity('profile')
-export class Profile {
-  @PrimaryGeneratedColumn('uuid', { name: 'profile_id' })
+@Entity('mentor_profile')
+export class MentorProfile {
+  @PrimaryGeneratedColumn('uuid', { name: 'mentor_profile_id' })
   id: string;
 
   @Column({ name: 'birthday', type: 'date' })
@@ -23,9 +25,6 @@ export class Profile {
 
   @Column({ name: 'sex', type: 'varchar' })
   sex: string;
-
-  @Column({ name: 'enroll', type: 'int' })
-  enroll: number;
 
   @Column({ name: 'imgUrl', type: 'varchar', nullable: true })
   imgUrl: string;
@@ -36,12 +35,21 @@ export class Profile {
   @Column({ name: 'personal_description', type: 'text', nullable: true })
   personalDescription: string;
 
+  @Column({ name: 'professional_experience', type: 'int', nullable: true })
+  professionalExperience: number;
+
   @Column({ name: 'course', type: 'enum', enum: EnumCourse })
   course: EnumCourse;
 
   @OneToOne(() => User, { cascade: true })
   @JoinColumn()
   user: User;
+
+  @OneToMany(() => MentorMajor, (major) => major.mentor, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  major: MentorMajor[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

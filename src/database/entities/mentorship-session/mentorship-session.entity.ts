@@ -21,7 +21,7 @@ export class MentorshipSession {
   @Column({ name: 'status', type: 'enum', enum: EnumMentorshipStatus })
   status: EnumMentorshipStatus;
 
-  @CreateDateColumn({ name: 'date_booked', type: 'timestamp' })
+  @Column({ name: 'date_booked', type: 'timestamp' })
   dateBooked: Date;
 
   @OneToOne(() => MentorshipAppointment, { cascade: true })

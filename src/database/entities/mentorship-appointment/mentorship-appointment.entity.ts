@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,6 +12,7 @@ import {
   EnumMentorshipStatus,
   EnumMentorshipType,
 } from 'src/models/mentorship-appointment/interfaces/interface';
+import { TagMentorship } from '../tag-mentorship/tag-mentorship.entity';
 
 @Entity('mentorship_appointment')
 export class MentorshipAppointment {
@@ -34,8 +36,17 @@ export class MentorshipAppointment {
   @Column({ name: 'message', type: 'text' })
   message: string;
 
-  @ManyToOne(() => User, (user) => user.mentorshipAppointment)
+  @ManyToOne(() => User, (user) => user.mentorshipAppointment, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   mentoring: User;
+
+  @OneToMany(() => TagMentorship, (tag) => tag.mentorship, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  tag: TagMentorship[];
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;

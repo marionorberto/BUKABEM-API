@@ -10,6 +10,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ProfileModule } from './models/profiles/profiles.module';
 import { MentorshipAppointmentModule } from './models/mentorship-appointment/mentorship-appointment.module';
+import { TagMentorship } from './database/entities/tag-mentorship/tag-mentorship.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,6 +36,7 @@ import { MentorshipAppointmentModule } from './models/mentorship-appointment/men
     AuthModule,
     ProfileModule,
     MentorshipAppointmentModule,
+    TagMentorship,
   ],
   controllers: [AppController],
   providers: [

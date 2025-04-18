@@ -82,6 +82,10 @@ export class User {
   @OneToMany(
     () => MentorshipAppointment,
     (mentorshipAppointment) => mentorshipAppointment.mentoring,
+    {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
   )
   mentorshipAppointment: MentorshipAppointment;
 
