@@ -78,7 +78,6 @@ export class ProfileService {
         classe,
         imgUrl,
         personalDescription,
-        professionalExperience,
         user,
         createdAt,
       } = profileSaved;
@@ -95,7 +94,6 @@ export class ProfileService {
           classe,
           imgUrl,
           personalDescription,
-          professionalExperience,
           user,
           createdAt,
         },
@@ -123,13 +121,11 @@ export class ProfileService {
 
   async findByPk(request: Request) {
     try {
-      const { idUser } = request['user'];
+      const { userId } = await request['user'];
 
-      const profile = await this.profilesRepository
-        .createQueryBuilder('profile')
-        .leftJoinAndSelect('profile.tags', 'tag')
-        .where('profile.userId = :userId', { userId: idUser })
-        .getOne();
+      const profile = await this.profilesRepository.query(
+        `select * from profile where userId = '${userId}' `,
+      );
 
       return {
         statusCode: 200,
